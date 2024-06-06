@@ -1,0 +1,296 @@
+
+  
+  body{
+    margin:0;
+    padding-top:100px;
+    background-color:rgb(255, 255, 255)
+  } 
+  
+  #holder{
+      width: 800px;
+      height: 500px;
+      position: relative;
+      background: hsl(0, 0%, 100%);
+  }
+  
+  #viewport {
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      width: 100%;
+      bottom: 100px;
+  }
+  
+  
+    #Germline {
+        animation: updownA1 10s linear forwards infinite;
+    }
+    #Germline1 {
+        animation: updownA1 10s linear forwards infinite;
+    }
+    #DTC {
+        animation: updownA2 10s linear forwards infinite;
+    }
+    #DTC1 {
+        animation: updownA2 10s linear forwards infinite;
+    }
+    #Glia {
+        animation: updownA4 10s linear forwards infinite;
+    }
+    #Glia1 {
+        animation: updownA4 10s linear forwards infinite;
+    }
+    #Muscle {
+        animation: updownA3 10s linear forwards infinite;
+    }
+    #Muscle1 {
+        animation: updownA3 10s linear forwards infinite;
+    }
+
+
+
+    #uterus {
+        animation: updownB1 10s linear forwards infinite;
+    }
+    #uterus1 {
+        animation: updownB1 10s linear forwards infinite;
+    }
+
+    #Spermatheca {
+        animation: updownB2 10s linear forwards infinite;
+    }
+    #Spermatheca1 {
+        animation: updownB2 10s linear forwards infinite;
+    }
+    #Embryo {
+        animation: updownB3 10s linear forwards infinite;
+    }
+    #Embryo1 {
+        animation: updownB3 10s linear forwards infinite;
+    }
+    
+    #Pharynx {
+        animation: updownB4 10s linear forwards infinite;
+    }
+    #Pharynx1 {
+        animation: updownB4 10s linear forwards infinite;
+    }
+    #Anterior_Intestine {
+        animation: updownB5 10s linear forwards infinite;
+    }
+    #Posterior_Intestine {
+        animation: updownB5 10s linear forwards infinite;
+    }
+    #Intestine1 {
+        animation: updownB5 10s linear forwards infinite;
+    }
+
+    #Neuron {
+        animation: updownB6 10s linear forwards infinite;
+    }
+    #Neuron1 {
+        animation: updownB6 10s linear forwards infinite;
+    }
+
+    @keyframes updownA1 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(-85px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(-85px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownA2 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(-40px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(-40px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownA3 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(-30px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(-30px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownA4 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(-50px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(-50px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+
+
+    @keyframes updownB1 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(78px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(78px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownB2 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(70px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(70px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownB3 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(65px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(65px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownB4 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(75px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(75px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownB5 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(50px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(50px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }
+    @keyframes updownB6 {
+        0%{
+            transform: translateY(0px);
+            animation-timing-function: cubic-bezier(.50,0,1,.50);
+        }
+        10%{
+            transform: translateY(30px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        50%{
+            transform: translateY(30px);
+            animation-timing-function: cubic-bezier(0,.50,.50,1);
+        }
+        60%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(0px);
+        }
+    }

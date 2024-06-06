@@ -11,7 +11,7 @@ library(ggpubr)
 library(Seurat)
 
 
-# # data input
+## data input
 
 load("data/worm_seurat.RData")
 
@@ -54,13 +54,6 @@ genotype_names_heatmap1 <- c("WT D1"
                     ,"rsks-1(If) D6")
 
 
-# gene = "ret-1"
-
-# str(APA_data)
-# Column names in APA (excluding the gene columns)
-# APA_data@Dimnames[[2]][1:9]
-# str(expression)
-
 
 cols<-brewer.pal(9, "RdYlBu")  
 apa_umap_colors <- colorRampPalette(cols)
@@ -85,11 +78,6 @@ umap_colors_tissue <- c("#50AAAE" # Coelomocyte
   ,"#8abcd1" # Vulva & uterus
 ) 
 
-# as.factor(ident_data$tissue)-> tissue_factors
-# levels(tissue_factors)<-seq(length(levels(tissue_factors)))
-# myColors <- umap_colors_tissue
-# levels(tissue_factors) <- myColors
-
 
 
 
@@ -101,17 +89,6 @@ hm_colors <- colorRampPalette(c("#FC4911", "#D83E0C", "#A92F08",
                                 "#01233A", "#043250", "#0B4972", 
                                 "#0F5B8D", "#1873B1"))
                                 
-
-# wt_D1 <- "#E5E5E5"
-# wt_D6 <- "#BEBEBE"
-# wt_D12 <- "#938F92"
-# wt_D14 <- "#6B696B"
-# lipl4_D1 <- "#6F84C1" #33669A
-# lipl4_D6 <- "#0066CC"
-# daf2_D1 <- "#BCA15E" #BCA779
-# daf2_D6 <- "#CC9900"
-# rsks1_D1 <- "#9E5188"
-# rsks1_D6 <- "#990066"
 
 
 geno_freq_colors <- c("#E5E5E5" # wt_D1
@@ -147,30 +124,6 @@ tissue_freq_colors <- c("#FDB668" # Embroynic
 
 
 
-# # Function to create dot plot of gene expression by tissue and genotype
-# create_dotplot <- function(expr_df, gene_name, tissue_col, genotype_col) {
-#   
-#   # Subset the data to include only the gene of interest
-#   gene_expr <- expr_df[, c(gene_name, tissue_col, genotype_col)]
-#   
-#   # Aggregate expression data by tissue and genotype
-#   expr_agg <- gene_expr %>% 
-#     group_by(!!sym(genotype_col), !!sym(tissue_col)) %>% 
-#     summarise(mean_expr = mean(!!sym(gene_name)))
-#   
-#   # Create the dot plot using ggplot2
-#   ggplot(expr_agg, aes(x = !!sym(genotype_col), y = !!sym(tissue_col), size = mean_expr)) +
-#     geom_point() +
-#     scale_size_continuous(range = c(2, 6), guide = FALSE) +
-#     xlab(genotype_col) +
-#     ylab(tissue_col) +
-#     ggtitle(paste0("Expression of ", gene_name))
-# }
-
-
-
-
-
 ############## Functions pheatmap uses to carry out normalization ##############
 scale_rowz <- function (x) 
 {
@@ -192,28 +145,13 @@ scale_matrix <- function (mat, scale)
 }
 ################################################################################
 
-
-
-
-
-
-
-################################################################################
-## data pre-process
+## data pre-processing
 
 ## UI
 ui <-htmlTemplate(
   filename = "www/feb_20_template.html",
   expression = 
     
-    # fluidPage(
-    #   fluidRow(column(5, selectInput('geneNameIn', 'Gene:', choices = genenames_seurat)),
-    #            column(3),
-    #            column(5, selectInput('hist', 'Toggle Histogram By:', choices = c('Tissue', 'Genotype')))),
-    #   
-    #   fluidRow(column(6,plotlyOutput("UMAP_expression")),
-    #            column(6,plotlyOutput("histograms")),
-               
                
     fluidPage(
       fluidRow(column(5, selectInput('geneNameIn', 'Gene:',choices = 'ret-1'))),
@@ -230,7 +168,6 @@ ui <-htmlTemplate(
 
       
       )),
-    # fluidRow(column(8, plotOutput("dotplot")))),
   
   APA = material_card(
     fluidPage(
@@ -252,37 +189,12 @@ ui <-htmlTemplate(
 server <- function(input, output,session) {
  
   updateSelectizeInput(session, 'geneNameIn', choices = genenames_seurat,server=TRUE,selected='ret-1')
-  updateSelectizeInput(session, 'geneNameIn_for_apa', choices = genenames_APA, server = TRUE,,selected='ret-1')
+  updateSelectizeInput(session, 'geneNameIn_for_apa', choices = genenames_APA, server = TRUE,selected='ret-1')
   
-
-  
-#   
-#   
-#   
-#   
-#   observeEvent(input$geneNameIn, {
-#     
-#     gene = input$geneNameIn
-#     
-#     expression[,gene] -> gene_exp
-#     
-#     # identical(rownames(as.data.frame(gene_exp)), rownames(ident_data))
-#   
-#     expr_df <- cbind(as.data.frame(gene_exp), ident_data$tissue, ident_data$genotype)
-#     colnames(expr_df)<-c(gene,"tissue","genotype")
-#   
-#   output$dotplot <- renderPlot({
-#   # Create dot plot for gene
-#     create_dotplot(expr_df, gene, "tissue", "genotype")
-#     
-#   })
-#   
-# })
-#   
 
   
   observeEvent(input$geneNameIn, {
-#    as.data.frame(expression[,c(input$geneNameIn)]) -> expression_df
+
     FetchData(object=slimS,vars=c(input$geneNameIn))->expression_df
     
     output$UMAP_expression <- renderPlotly(
@@ -297,7 +209,7 @@ server <- function(input, output,session) {
       ) %>% config(modeBarButtonsToRemove= c('toggleSpikelines','hoverCompareCartesian','toggleHover','hoverClosestCartesian','autoScale2d','select2d','lasso2d')) %>%
         config(displaylogo=FALSE) %>%
         config(scrollZoom= FALSE)  %>%
-        # config(displayModeBar= TRUE) %>%
+
         layout(xaxis = list(showgrid=FALSE, mirror=TRUE,ticks='outside',showline=TRUE,zeroline=F,title='UMAP 1'),
                yaxis = list(showgrid=FALSE, mirror=TRUE,ticks='outside',showline=TRUE,zeroline=F,title='UMAP 2'),
                font=list(family='Arial',size=12),
@@ -312,8 +224,6 @@ server <- function(input, output,session) {
       
       dotdata %>% separate(id,c("genotype","tissue"),"_") -> dotdata
       
-      # unique(dotdata$genotype)->old_geno
-      # unique(dotdata$tissue)->old_tissue
       
       for (i in 1:nrow(dotdata)) {
         
@@ -354,37 +264,10 @@ server <- function(input, output,session) {
       }
       
       
-      # unique(dotdata$genotype)->new_geno
-      # unique(dotdata$tissue)->new_tissue
-
-
-      
-      # dotdata <- dotdata %>% arrange(factor(genotype, levels = c("WT D1",
-      #                                                 "WT D6",
-      #                                                 "WT D12",
-      #                                                 "WT D14",
-      #                                                 "lipl-4 Tg D1",
-      #                                                 "lipl-4 Tg D6",
-      #                                                 "daf-2(If) D1",
-      #                                                 "daf-2(If) D6",
-      #                                                 "rsks-1(If) D1",
-      #                                                 "rsks-1(If) D6")))
-      
-      
-      
       
       as.factor(dotdata$genotype)->dotdata$genotype
       
-      # levels(dotdata$genotype)<- c("WT D1",
-      #                              "WT D6",
-      #                              "WT D12",
-      #                              "WT D14",
-      #                              "lipl-4 Tg D1",
-      #                              "lipl-4 Tg D6",
-      #                              "daf-2(If) D1",
-      #                              "daf-2(If) D6",
-      #                              "rsks-1(If) D1",
-      #                              "rsks-1(If) D6")
+
       
       output$dot_expression <-renderPlotly(plot_ly(dotdata,x=~tissue,y=~genotype,type='scatter',
                                                    mode='markers',marker=list(size=~avg.exp.scaled,color=~colors,line=list(color='black',width=2)),
@@ -400,9 +283,6 @@ server <- function(input, output,session) {
   
   
   ## UMAP_expression
- 
-  
-  
   ##   histogram
   
   observeEvent(input$hist, {
@@ -457,24 +337,6 @@ observeEvent(input$geneNameIn_for_apa, {
   n2d6_df <- N2D6_APA[,gene]
   n2d12.d14_df <- N2D12_D14_APA[,gene]
   
-  # n2d12.d14_df2 <- n2d12.d14_df %>% 
-  #   arrange(desc(abs(!!sym(gene))), desc(!!sym(gene) == 0))
-  # 
-  
-  # 
-  # sorted_df <- n2d12.d14_df %>%
-  #   arrange(desc(!!sym(gene) > 0),
-  #           desc(abs(!!sym(gene))),
-  #           !!sym(gene) * sign(!!sym(gene)),
-  #           desc(!!sym(gene) == 0))
-  # 
-  # 
-  # sorted_df <- sorted_df %>% 
-  #   arrange(desc(!!sym(gene) < 0),
-  #           desc(abs(!!sym(gene))),
-  #           !!sym(gene) * sign(!!sym(gene)),
-  #           desc(!!sym(gene) == 0))
-
   
   cols<-brewer.pal(9, "RdYlBu")
   limz <- c(min(n2d1_df, n2d6_df, n2d12.d14_df), 
@@ -555,7 +417,7 @@ observeEvent(input$geneNameIn_for_apa, {
     ) %>% config(modeBarButtonsToRemove= c('toggleSpikelines','hoverCompareCartesian','toggleHover','hoverClosestCartesian','autoScale2d','select2d','lasso2d')) %>% 
       config(displaylogo=FALSE) %>% 
       config(scrollZoom= FALSE)  %>% 
-      # config(displayModeBar= TRUE) %>%
+      
       layout(xaxis = list(showgrid=FALSE, mirror=TRUE,ticks='outside',showline=TRUE,zeroline=F,title='UMAP 1'),
              yaxis = list(showgrid=FALSE, mirror=TRUE,ticks='outside',showline=TRUE,zeroline=F,title='UMAP 2'),
              font=list(family='Arial',size=12),
@@ -577,7 +439,7 @@ observeEvent(input$geneNameIn_for_apa, {
     ) %>% config(modeBarButtonsToRemove= c('toggleSpikelines','hoverCompareCartesian','toggleHover','hoverClosestCartesian','autoScale2d','select2d','lasso2d')) %>% 
       config(displaylogo=FALSE) %>% 
       config(scrollZoom= FALSE)  %>% 
-      # config(displayModeBar= TRUE) 
+       
       layout(xaxis = list(showgrid=FALSE, mirror=TRUE,ticks='outside',showline=TRUE,zeroline=F,title='UMAP 1'),
              yaxis = list(showgrid=FALSE, mirror=TRUE,ticks='outside',showline=TRUE,zeroline=F,title='UMAP 2'),
              font=list(family='Arial',size=12),
@@ -606,14 +468,9 @@ observeEvent(c(input$geneNameIn_for_apa,input$scale_by),{
     output$heatmap1 <- renderPlotly({
       
       # Normalize the data by column
-      # APA <- apply(df, 2, function(x) (x - min(x)) / (max(x) - min(x)))
-      
-      # Normalize the data by column
       APA <- scale_matrix(df, scale = scale_input)
       as.matrix(APA) -> APA
       
-      # hdf <- data.frame(x = c(2,4,6,8), 
-      #                   y1 = rep(0, 4), y2 = rep(8, 4))
       
       plot_ly(z = ~APA, type = "heatmap", colors = hm_colors(150), 
               colorbar = list(title = "APA Score")) %>%
@@ -635,27 +492,13 @@ observeEvent(c(input$geneNameIn_for_apa,input$scale_by),{
                                          'lasso2d')) %>% 
         config(displaylogo=FALSE) %>% 
         config(scrollZoom= FALSE)
-      # %>%
-      #   add_segments(data =hdf , x=~x, xend =~x, y=~y1, yend =~y2,
-      #                line = list(color = "black",size = 5), 
-      #                inherit = FALSE,showlegend = FALSE)
+
       
     })
     
     
   })
 
-
-
-
-
-
-
-
-  
-
-
-# Hortizontal
 
 
 observeEvent(input$geneNameIn_for_apa, {
@@ -699,40 +542,6 @@ observeEvent(input$geneNameIn_for_apa, {
 })
 
 
-
-
-# # Vertical
-# 
-# observeEvent(input$geneNameIn_for_apa, {
-# 
-#   
-# df_heatmap2 <- avg_APA_N2D1[1,]
-# rownames(df_heatmap2) <- "WT_D1"
-# 
-# df_heatmap2 <- apply(df_heatmap2, 1, function(x) (x - min(x)) / (max(x) - min(x)))
-#   
-# 
-# output$heatmap2 <- renderPlotly({
-#   
-#   plot_ly(z = ~df_heatmap2, type = "heatmap", colors = hm_colors(150)) %>%
-#     layout(xaxis = list(title = list(text = "Genotype", size = 20),
-#                         ticktext = colnames(df_heatmap2), tickvals = 0:ncol(df_heatmap2),
-#                         tickfont = list(size = 14)),
-#            yaxis = list(title = list(text = "Tissues", size = 20),
-#                         ticktext = rownames(df_heatmap2), tickvals = 0:nrow(df_heatmap2),
-#                         tickfont = list(size = 14)),
-#            font=list(family='Arial'))
-# 
-# })
-#   
-#   
-# 
-# })
-
-
-
-
-  
 }
 
 ################################################################################
