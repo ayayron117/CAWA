@@ -1,5 +1,8 @@
-# app.r
+Cellular Atlas of Worm Aging
+================
+Aaron Mohammed
 
+``` r
 library(shiny)
 library(dplyr)
 library(plotly)
@@ -12,14 +15,12 @@ library(Matrix)
 library(ggpubr)
 library(Seurat)
 
-
-## data input
-
 load("data/worm_seurat.RData")
 
 source("modules/heatmap_main_8.R")
+```
 
-
+``` r
 tissue_names_heatmap1 <- c("Intestine"
                            ,"Pharynx"
                            ,"Neuron"
@@ -106,27 +107,23 @@ geno_freq_colors <- c("#E5E5E5" # wt_D1
 
 
 tissue_freq_colors <- c("#FDB668" # Embroynic
-	,"#B5E1A1" # Hypodermis
-	,"#FDD17E" # Germline
-	,"#466DB0" # Spermatheca
-	,"#6EC5AC" # Sperms
-	,"#207F4C"# Muscle
-	,"#F0ADA0" # Intestine
-	,"#5E4FA2" # DTC/Excretory gland
-	,"#BB2148" # Neuron
-	,"#D4ED9B" # Gonadal sheath
-	,"#F8E48E" # Pharynx
-	,"#8abcd1" # Vulva & uterus
-	,"#FFC0CB" # Uterine seam cell
-	,"#358BBB" # Glia
-	,"#50AAAE") # Coelomocyte
+    ,"#B5E1A1" # Hypodermis
+    ,"#FDD17E" # Germline
+    ,"#466DB0" # Spermatheca
+    ,"#6EC5AC" # Sperms
+    ,"#207F4C"# Muscle
+    ,"#F0ADA0" # Intestine
+    ,"#5E4FA2" # DTC/Excretory gland
+    ,"#BB2148" # Neuron
+    ,"#D4ED9B" # Gonadal sheath
+    ,"#F8E48E" # Pharynx
+    ,"#8abcd1" # Vulva & uterus
+    ,"#FFC0CB" # Uterine seam cell
+    ,"#358BBB" # Glia
+    ,"#50AAAE") # Coelomocyte
+```
 
-
-
-
-
-
-############## Functions pheatmap uses to carry out normalization ##############
+``` r
 scale_rowz <- function (x) 
 {
   m = apply(x, 1, mean, na.rm = T)
@@ -145,10 +142,9 @@ scale_matrix <- function (mat, scale)
     return(mat)
   }
 }
-################################################################################
+```
 
-## data pre-processing
-
+``` r
 ## UI
 ui <-htmlTemplate(
   filename = "www/feb_20_template.html",
@@ -183,11 +179,9 @@ ui <-htmlTemplate(
                column(3,plotlyOutput("heatmap2")))
       ))
   )
+```
 
-
-################################################################################
-
-
+``` r
 server <- function(input, output,session) {
  
   updateSelectizeInput(session, 'geneNameIn', choices = genenames_seurat,server=TRUE,selected='ret-1')
@@ -427,14 +421,6 @@ observeEvent(input$geneNameIn_for_apa, {
                                                                             paper_bgcolor = "rgba(0, 0, 0, 0)")
   )
   
-  
-  
-  
-  
- 
-  
-  
-  
   output$apa_N2D12.D14_umap <- renderPlotly(
     ggplotly(n2d12.d14_p,
              showlegend = T,tooltip = "text"
@@ -498,10 +484,7 @@ observeEvent(c(input$geneNameIn_for_apa,input$scale_by),{
       
     })
     
-    
   })
-
-
 
 observeEvent(input$geneNameIn_for_apa, {
   
@@ -545,11 +528,8 @@ observeEvent(input$geneNameIn_for_apa, {
 
 
 }
+```
 
-################################################################################
-
+``` r
 shinyApp(ui = ui, server = server)
-
-
-
-
+```

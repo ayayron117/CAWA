@@ -424,15 +424,7 @@ observeEvent(input$geneNameIn_for_apa, {
              dragmode='pan',title='WT D6') %>% layout(plot_bgcolor  = "rgba(0, 0, 0, 0)",
                                                                             paper_bgcolor = "rgba(0, 0, 0, 0)")
   )
-  
-  
-  
-  
-  
- 
-  
-  
-  
+
   output$apa_N2D12.D14_umap <- renderPlotly(
     ggplotly(n2d12.d14_p,
              showlegend = T,tooltip = "text"
@@ -498,8 +490,6 @@ observeEvent(c(input$geneNameIn_for_apa,input$scale_by),{
     
     
   })
-
-
 
 observeEvent(input$geneNameIn_for_apa, {
   
